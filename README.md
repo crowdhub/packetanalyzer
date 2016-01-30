@@ -1,4 +1,4 @@
-1. Title: Data Analyzer    
+1. Title: Packet Analyzer    
 
 2. Description: An application program to analyze network protocols and visualize packet information, network statistics to assist network administrator for network management.  
 
