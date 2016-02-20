@@ -1,0 +1,14 @@
+D:\Src\PacketAnalyzer\PacketAnalyzer\bin\Debug\PacketAnalyzer.exe.config
+D:\Src\PacketAnalyzer\PacketAnalyzer\bin\Debug\PacketAnalyzer.exe
+D:\Src\PacketAnalyzer\PacketAnalyzer\bin\Debug\PacketAnalyzer.pdb
+D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Debug\PacketAnalyzer.csprojResolveAssemblyReference.cache
+D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Debug\PacketAnalyzer.Properties.Resources.resources
+D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Debug\PacketAnalyzer.csproj.GenerateResource.Cache
+D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Debug\PacketAnalyzer.exe
+D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Debug\PacketAnalyzer.pdb
+D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Debug\PacketAnalyzer.frmMain.resources
+D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Debug\PacketAnalyzer.frmStatistics.resources
+D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Debug\PacketAnalyzer.frmQuery.resources
+C:\Users\user1\Source\Repos\PacketAnalyzer\PacketAnalyzer\bin\Debug\PacketAnalyzer.exe.config
+C:\Users\user1\Source\Repos\PacketAnalyzer\PacketAnalyzer\obj\Debug\PacketAnalyzer.exe
+C:\Users\user1\Source\Repos\PacketAnalyzer\PacketAnalyzer\obj\Debug\PacketAnalyzer.pdb
