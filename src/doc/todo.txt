@@ -1,0 +1,13 @@
+- Statistics -
+
+1. Packet Size 별 통계
+
+2. Packet 종류별 통계
+
+3. 초당 Traffic
+
+- Packet Search -
+
+1. ASCII
+2. Binary
+
