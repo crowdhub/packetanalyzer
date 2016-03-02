@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>/home/cmorgan/hdd/packetnet_git/PacketDotNet/bin/Debug/PacketDotNet</name>
+        <name>/home/cmorgan/hdd/packetnet_git/PacketDotNet/bin/Release/PacketDotNet</name>
     </assembly>
     <members>
         <member name="T:PacketDotNet.ApplicationPacket">

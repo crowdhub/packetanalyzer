@@ -39,6 +39,8 @@
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.statisticsToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.captureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.setInterfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.startToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.stopToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.statisticsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -49,8 +51,6 @@
             this.lstPackets = new System.Windows.Forms.ListView();
             this.lstPacketLayer = new System.Windows.Forms.ListBox();
             this.hexEdit = new Be.Windows.Forms.HexBox();
-            this.setInterfaceToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -81,7 +81,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(108, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -96,7 +96,7 @@
             // filterToolStripMenuItem
             // 
             this.filterToolStripMenuItem.Name = "filterToolStripMenuItem";
-            this.filterToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.filterToolStripMenuItem.Size = new System.Drawing.Size(117, 26);
             this.filterToolStripMenuItem.Text = "&Filter";
             this.filterToolStripMenuItem.Click += new System.EventHandler(this.filterToolStripMenuItem_Click);
             // 
@@ -113,19 +113,19 @@
             // findPacketToolStripMenuItem
             // 
             this.findPacketToolStripMenuItem.Name = "findPacketToolStripMenuItem";
-            this.findPacketToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.findPacketToolStripMenuItem.Size = new System.Drawing.Size(179, 26);
             this.findPacketToolStripMenuItem.Text = "Search Packet";
             this.findPacketToolStripMenuItem.Click += new System.EventHandler(this.findPacketToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(160, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(176, 6);
             // 
             // statisticsToolStripMenuItem1
             // 
             this.statisticsToolStripMenuItem1.Name = "statisticsToolStripMenuItem1";
-            this.statisticsToolStripMenuItem1.Size = new System.Drawing.Size(163, 26);
+            this.statisticsToolStripMenuItem1.Size = new System.Drawing.Size(179, 26);
             this.statisticsToolStripMenuItem1.Text = "Statistics";
             this.statisticsToolStripMenuItem1.Click += new System.EventHandler(this.statisticsToolStripMenuItem1_Click);
             // 
@@ -140,17 +140,29 @@
             this.captureToolStripMenuItem.Size = new System.Drawing.Size(75, 24);
             this.captureToolStripMenuItem.Text = "&Capture";
             // 
+            // setInterfaceToolStripMenuItem
+            // 
+            this.setInterfaceToolStripMenuItem.Name = "setInterfaceToolStripMenuItem";
+            this.setInterfaceToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
+            this.setInterfaceToolStripMenuItem.Text = "Set Interface";
+            this.setInterfaceToolStripMenuItem.Click += new System.EventHandler(this.setInterfaceToolStripMenuItem_Click);
+            // 
+            // toolStripSeparator2
+            // 
+            this.toolStripSeparator2.Name = "toolStripSeparator2";
+            this.toolStripSeparator2.Size = new System.Drawing.Size(166, 6);
+            // 
             // startToolStripMenuItem
             // 
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.startToolStripMenuItem.Text = "&Start";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
             // stopToolStripMenuItem
             // 
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(169, 26);
             this.stopToolStripMenuItem.Text = "&Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
@@ -224,18 +236,6 @@
             this.hexEdit.Size = new System.Drawing.Size(819, 194);
             this.hexEdit.TabIndex = 4;
             // 
-            // setInterfaceToolStripMenuItem
-            // 
-            this.setInterfaceToolStripMenuItem.Name = "setInterfaceToolStripMenuItem";
-            this.setInterfaceToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
-            this.setInterfaceToolStripMenuItem.Text = "Set Interface";
-            this.setInterfaceToolStripMenuItem.Click += new System.EventHandler(this.setInterfaceToolStripMenuItem_Click);
-            // 
-            // toolStripSeparator2
-            // 
-            this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(178, 6);
-            // 
             // frmMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
@@ -249,6 +249,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "frmMain";
             this.Text = "Packet Analyzer";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.frmMain_FormClosing);
             this.Load += new System.EventHandler(this.frmMain_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
