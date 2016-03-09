@@ -567,7 +567,7 @@
 							"left": 104,
 							"top": 376,
 							"width": 81,
-							"height": 78,
+							"height": 73,
 							"autoResize": false
 						},
 						{
@@ -1724,7 +1724,7 @@
 								"$ref": "AAAAAAFTIPWakZeyrmo="
 							},
 							"lineStyle": 1,
-							"points": "185:415;240:416;240:216;327:214",
+							"points": "185:414;240:416;240:216;327:214",
 							"stereotypeDisplay": "label",
 							"showVisibility": true,
 							"showProperty": true,
@@ -1865,7 +1865,7 @@
 								"$ref": "AAAAAAFTIPWakZeyrmo="
 							},
 							"lineStyle": 1,
-							"points": "144:454;144:496;280:496;280:400;303:399",
+							"points": "144:449;144:496;280:496;280:400;303:399",
 							"stereotypeDisplay": "label",
 							"showVisibility": true,
 							"showProperty": true,
@@ -3046,7 +3046,7 @@
 							"width": 66,
 							"height": 38,
 							"autoResize": false,
-							"text": "Intterface selected?",
+							"text": "Interface selected?",
 							"wordWrap": true
 						}
 					]
