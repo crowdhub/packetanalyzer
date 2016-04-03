@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace PacketAnalyzer
 {
     // Singleton class which contains configuration
-    class OConfiguration
+    public class OConfiguration
     {
         // selected NIC device which will be used on packet capturing
         private int _selectedNIC = -1;

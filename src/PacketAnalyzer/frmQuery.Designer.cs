@@ -29,8 +29,7 @@
         private void InitializeComponent()
         {
             this.label1 = new System.Windows.Forms.Label();
-            this.startDate = new System.Windows.Forms.DateTimePicker();
-            this.startTime = new System.Windows.Forms.DateTimePicker();
+            this.startDateTime = new System.Windows.Forms.DateTimePicker();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.btnDeselectAll = new System.Windows.Forms.Button();
@@ -39,8 +38,7 @@
             this.process1 = new System.Diagnostics.Process();
             this.btnOK = new System.Windows.Forms.Button();
             this.btnCancel = new System.Windows.Forms.Button();
-            this.endTime = new System.Windows.Forms.DateTimePicker();
-            this.endDate = new System.Windows.Forms.DateTimePicker();
+            this.endDateTime = new System.Windows.Forms.DateTimePicker();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -53,26 +51,19 @@
             this.label1.TabIndex = 0;
             this.label1.Text = "Time:";
             // 
-            // startDate
+            // startDateTime
             // 
-            this.startDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.startDate.Location = new System.Drawing.Point(66, 12);
-            this.startDate.Name = "startDate";
-            this.startDate.Size = new System.Drawing.Size(132, 25);
-            this.startDate.TabIndex = 1;
-            // 
-            // startTime
-            // 
-            this.startTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.startTime.Location = new System.Drawing.Point(204, 12);
-            this.startTime.Name = "startTime";
-            this.startTime.Size = new System.Drawing.Size(117, 25);
-            this.startTime.TabIndex = 2;
+            this.startDateTime.CustomFormat = "yyyy.MM.dd hh.mm";
+            this.startDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.startDateTime.Location = new System.Drawing.Point(66, 12);
+            this.startDateTime.Name = "startDateTime";
+            this.startDateTime.Size = new System.Drawing.Size(192, 25);
+            this.startDateTime.TabIndex = 1;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(342, 19);
+            this.label2.Location = new System.Drawing.Point(274, 19);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(18, 15);
             this.label2.TabIndex = 3;
@@ -98,6 +89,7 @@
             this.btnDeselectAll.TabIndex = 2;
             this.btnDeselectAll.Text = "Deselect All";
             this.btnDeselectAll.UseVisualStyleBackColor = true;
+            this.btnDeselectAll.Click += new System.EventHandler(this.btnDeselectAll_Click);
             // 
             // btnSelectAll
             // 
@@ -107,17 +99,11 @@
             this.btnSelectAll.TabIndex = 1;
             this.btnSelectAll.Text = "Select All";
             this.btnSelectAll.UseVisualStyleBackColor = true;
+            this.btnSelectAll.Click += new System.EventHandler(this.btnSelectAll_Click);
             // 
             // chkListBox
             // 
             this.chkListBox.FormattingEnabled = true;
-            this.chkListBox.Items.AddRange(new object[] {
-            "HTTP",
-            "HTTPS",
-            "SSH",
-            "POP3",
-            "SMTP",
-            "FTP"});
             this.chkListBox.Location = new System.Drawing.Point(20, 56);
             this.chkListBox.Name = "chkListBox";
             this.chkListBox.Size = new System.Drawing.Size(586, 124);
@@ -135,7 +121,6 @@
             // 
             // btnOK
             // 
-            this.btnOK.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.btnOK.Location = new System.Drawing.Point(231, 291);
             this.btnOK.Name = "btnOK";
             this.btnOK.Size = new System.Drawing.Size(75, 23);
@@ -154,21 +139,14 @@
             this.btnCancel.Text = "Cancel";
             this.btnCancel.UseVisualStyleBackColor = true;
             // 
-            // endTime
+            // endDateTime
             // 
-            this.endTime.Format = System.Windows.Forms.DateTimePickerFormat.Time;
-            this.endTime.Location = new System.Drawing.Point(504, 12);
-            this.endTime.Name = "endTime";
-            this.endTime.Size = new System.Drawing.Size(114, 25);
-            this.endTime.TabIndex = 8;
-            // 
-            // endDate
-            // 
-            this.endDate.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.endDate.Location = new System.Drawing.Point(366, 12);
-            this.endDate.Name = "endDate";
-            this.endDate.Size = new System.Drawing.Size(132, 25);
-            this.endDate.TabIndex = 7;
+            this.endDateTime.CustomFormat = "yyyy.MM.dd hh.mm";
+            this.endDateTime.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
+            this.endDateTime.Location = new System.Drawing.Point(309, 12);
+            this.endDateTime.Name = "endDateTime";
+            this.endDateTime.Size = new System.Drawing.Size(192, 25);
+            this.endDateTime.TabIndex = 7;
             // 
             // frmQuery
             // 
@@ -176,20 +154,19 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.CancelButton = this.btnCancel;
             this.ClientSize = new System.Drawing.Size(649, 335);
-            this.Controls.Add(this.endTime);
-            this.Controls.Add(this.endDate);
+            this.Controls.Add(this.endDateTime);
             this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnOK);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.startTime);
-            this.Controls.Add(this.startDate);
+            this.Controls.Add(this.startDateTime);
             this.Controls.Add(this.label1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "frmQuery";
             this.Text = "Filter";
+            this.Load += new System.EventHandler(this.frmQuery_Load);
             this.groupBox1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -199,16 +176,14 @@
         #endregion
 
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.DateTimePicker startDate;
-        private System.Windows.Forms.DateTimePicker startTime;
+        private System.Windows.Forms.DateTimePicker startDateTime;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckedListBox chkListBox;
         private System.Diagnostics.Process process1;
         private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.DateTimePicker endTime;
-        private System.Windows.Forms.DateTimePicker endDate;
+        private System.Windows.Forms.DateTimePicker endDateTime;
         private System.Windows.Forms.Button btnSelectAll;
         private System.Windows.Forms.Button btnDeselectAll;
     }

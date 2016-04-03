@@ -37,12 +37,20 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Debug\Be.Windows.Forms.HexBox.dll</HintPath>
     </Reference>
+    <Reference Include="PacketDotNet, Version=0.13.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\PacketDotNet.dll</HintPath>
+    </Reference>
     <Reference Include="SharpPcap, Version=4.2.0.0, Culture=neutral, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>bin\Release\SharpPcap.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Data.SQLite, Version=1.0.79.0, Culture=neutral, PublicKeyToken=db937bc2d44ff139, processorArchitecture=x86">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Release\System.Data.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -89,9 +97,18 @@
     <Compile Include="frmMain.Designer.cs">
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="OArchive.cs" />
     <Compile Include="OConfiguration.cs" />
+    <Compile Include="OCurrentPacketList.cs" />
+    <Compile Include="OPacket.cs" />
+    <Compile Include="OStatistics.cs" />
+    <Compile Include="OStatisticsPacketPerProtocol.cs" />
+    <Compile Include="OStatisticsPacketPerTime.cs" />
+    <Compile Include="OStatisticsResult.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ProtocolInfo.cs" />
+    <Compile Include="TimeConvert.cs" />
     <EmbeddedResource Include="frmQuery.resx">
       <DependentUpon>frmQuery.cs</DependentUpon>
     </EmbeddedResource>

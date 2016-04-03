@@ -12,5 +12,5 @@ D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Release\PacketAnalyzer.pdb
 D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Release\PacketAnalyzer.csprojResolveAssemblyReference.cache
 D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Release\PacketAnalyzer.frmSelectNIC.resources
 D:\Src\PacketAnalyzer\PacketAnalyzer\obj\Release\PacketAnalyzer.frmSearchPacket.resources
-D:\Src\PacketAnalyzer\PacketAnalyzer\bin\Release\PacketDotNet.dll
 D:\Src\PacketAnalyzer\PacketAnalyzer\bin\Release\PacketDotNet.xml
+D:\Src\PacketAnalyzer\PacketAnalyzer\bin\Release\System.Data.SQLite.xml
