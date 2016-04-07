@@ -98,9 +98,12 @@
       <DependentUpon>frmMain.cs</DependentUpon>
     </Compile>
     <Compile Include="OArchive.cs" />
+    <Compile Include="OArchiveFactory.cs" />
+    <Compile Include="OArchiveSQLite.cs" />
     <Compile Include="OConfiguration.cs" />
     <Compile Include="OCurrentPacketList.cs" />
     <Compile Include="OPacket.cs" />
+    <Compile Include="OPacketSearcher.cs" />
     <Compile Include="OStatistics.cs" />
     <Compile Include="OStatisticsPacketPerProtocol.cs" />
     <Compile Include="OStatisticsPacketPerTime.cs" />

@@ -13,7 +13,7 @@ namespace PacketAnalyzer
         {
             _list.Clear();
         }
-        public void Add(OPacket packet)
+        public void AddPacket(OPacket packet)
         {
             _list.Add(packet);
         }
@@ -30,6 +30,15 @@ namespace PacketAnalyzer
         public int GetCount()
         {
             return _list.Count;
+        }
+
+        public void RemoveAt(int index)
+        {
+            if (index < 0 || index >= GetCount())
+            {
+                return;
+            }
+            _list.RemoveAt(index);
         }
     }
 }

@@ -24,11 +24,11 @@ namespace PacketAnalyzer
         {
             _packetPath = path;
         }
-        public ulong GetCollectedTime()
+        public ulong GetTimeCollected()
         {
             return _collectedTime;
         }
-        public void SetCollectedTime(ulong t)
+        public void SetTimeCollected(ulong t)
         {
             _collectedTime = t;
         }

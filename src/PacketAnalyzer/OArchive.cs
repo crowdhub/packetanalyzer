@@ -32,10 +32,10 @@ namespace PacketAnalyzer
 
         ~OArchive()
         {
-            _Uninitialize();
+            UninitializeDB();
         }
 
-        private bool _Initialize(string strDBPath, bool bCreateAlways)
+        protected virtual bool InitializeDB(string strDBPath, bool bCreateAlways)
         {
             // if database is already initialized, return false
             if (null != _dbConnection)
@@ -66,7 +66,7 @@ namespace PacketAnalyzer
             return true;
         }
 
-        private void _Uninitialize()
+        protected virtual void UninitializeDB()
         {
             // close database
         }
@@ -87,13 +87,13 @@ namespace PacketAnalyzer
             return true;
         }
 
-        private string _BuildQuery(ulong start, ulong end, List<int> protocols)
+        private string BuildSQLStatement(ulong from, ulong to, List<int> protocols)
         {
             string sql = "Select collected_time, src_ip, dest_ip, dest_port, length, packet_path from packets where ";
             sql += "(collected_time >= ";
-            sql += start.ToString();
+            sql += from.ToString();
             sql += " and collected_time <= ";
-            sql += end.ToString();
+            sql += to.ToString();
             sql += ")";
 
             // Find if there is all protocols
@@ -138,15 +138,15 @@ namespace PacketAnalyzer
 
         public bool OpenDatabase(String strDBPath, bool bCreateAlways)
         {
-            return _Initialize(strDBPath, bCreateAlways);
+            return InitializeDB(strDBPath, bCreateAlways);
         }
 
         public void CloseDatabase()
         {
-            _Uninitialize();
+            UninitializeDB();
         }
 
-        public void AddPacket(OPacket packet, byte[] rawData)
+        public void SavePacket(OPacket packet, byte[] rawData)
         {
             if (null == _dbConnection)
             {
@@ -169,7 +169,7 @@ namespace PacketAnalyzer
             // Save into the Database
             string sql = "INSERT INTO packets (collected_time, src_ip, dest_ip, dest_port, length, packet_path) values ";
             string sqlValue = "(";
-            sqlValue += packet.GetCollectedTime();
+            sqlValue += packet.GetTimeCollected();
             sqlValue += ", ";
             sqlValue += "\"";
             sqlValue += packet.GetSourceIP();
@@ -193,7 +193,7 @@ namespace PacketAnalyzer
             SQLiteCommand command = new SQLiteCommand(sql, _dbConnection);
             command.ExecuteNonQuery();
         }
-        public bool Query(ulong startTime, ulong endTime, List<int> protocolList, OCurrentPacketList curPackets)
+        public bool QueryPackets(ulong startTime, ulong endTime, List<int> protocolList, OCurrentPacketList curPackets)
         {
             if (null == _dbConnection)
             {
@@ -201,20 +201,20 @@ namespace PacketAnalyzer
             }
 
             // Build Query statement
-            string sql = _BuildQuery(startTime, endTime, protocolList);
+            string sql = BuildSQLStatement(startTime, endTime, protocolList);
             SQLiteCommand command = new SQLiteCommand(sql, _dbConnection);
             SQLiteDataReader reader = command.ExecuteReader();
             while (reader.Read())
             {
                 OPacket pac = new OPacket();
-                pac.SetCollectedTime((ulong)(Int64)reader[0]);
+                pac.SetTimeCollected((ulong)(Int64)reader[0]);
                 pac.SetSourceIP((string)reader[1]);
                 pac.SetDestinationIP((string)reader[2]);
                 pac.SetProtocol((int)(Int64)reader[3]);
                 pac.SetLength((int)(Int64)reader[4]);
                 pac.SetPacketStoredPath((string)reader[5]);
 
-                curPackets.Add(pac);
+                curPackets.AddPacket(pac);
             }
             return true;
         }

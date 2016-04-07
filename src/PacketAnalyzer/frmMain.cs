@@ -32,9 +32,9 @@ namespace PacketAnalyzer
         private List<RawCapture> _capturedPackets = new List<RawCapture>();
 
         // Database
-        OArchive _db = new OArchive();
+        private OArchive _db = null;
         // current packet list
-        OCurrentPacketList _curPacketList = new OCurrentPacketList();
+        private OCurrentPacketList _curPacketList = new OCurrentPacketList();
 
         private void _ThreadProc()
         {
@@ -77,12 +77,12 @@ namespace PacketAnalyzer
                     // 2. Save packet to database
                     lock (_sync)
                     {
-                        _db.AddPacket(packet, r.Data);
+                        _db.SavePacket(packet, r.Data);
                     }
 
                     int nNextNo = lstPackets.Items.Count + 1;
                     ListViewItem item = new ListViewItem(nNextNo.ToString());
-                    item.SubItems.Add(packet.GetCollectedTime().ToString());
+                    item.SubItems.Add(packet.GetTimeCollected().ToString());
                     item.SubItems.Add(packet.GetSourceIP());
                     item.SubItems.Add(packet.GetDestinationIP());
                     item.SubItems.Add(ProtocolInfo.instanceOf().ConvertToString(packet.GetProtocol()));
@@ -98,7 +98,7 @@ namespace PacketAnalyzer
                     ));
 
                     // Add OPacket object in the list
-                    _curPacketList.Add(packet);
+                    _curPacketList.AddPacket(packet);
                 }
                 curPacket.Clear();
             }
@@ -115,7 +115,7 @@ namespace PacketAnalyzer
             p.SetSourceIP(ip.SourceAddress.ToString());
             p.SetDestinationIP(ip.DestinationAddress.ToString());
             p.SetLength(r.Data.Length);
-            p.SetCollectedTime(r.Timeval.Seconds);
+            p.SetTimeCollected(r.Timeval.Seconds);
             TcpPacket tcp = PacketDotNet.TcpPacket.GetEncapsulated(packet);
             if (null != tcp)
             {
@@ -231,35 +231,6 @@ namespace PacketAnalyzer
                     .ToArray();
         }
 
-        private bool _ContainsSearchBytes(byte[] searchBytes, string path)
-        {
-            // Not fast method.
-            byte[] fileBytes = File.ReadAllBytes(path);
-            if (fileBytes.Length <= 0)
-            {
-                return false;
-            }
-
-            for (int i = 0; i < fileBytes.Length - searchBytes.Length; i++)
-            {
-                bool match = true;
-                for (int k = 0; k < searchBytes.Length; k++)
-                {
-                    if (fileBytes[i + k] != searchBytes[k])
-                    {
-                        match = false;
-                        break;
-                    }
-                }
-                if (match)
-                {
-                    int pos = i + searchBytes.Length;
-                    return match;
-                }
-            }
-            return false;
-        }
-
         private void _ShowCurrentSelectedPacketContents()
         {
             if (lstPackets.SelectedItems.Count <= 0)
@@ -329,7 +300,7 @@ namespace PacketAnalyzer
             Application.Exit();
         }
 
-        private void statisticsToolStripMenuItem1_Click(object sender, EventArgs e)
+        private void OnShowStatistics()
         {
             if (_curPacketList.GetCount() <= 0)
             {
@@ -341,6 +312,10 @@ namespace PacketAnalyzer
             frmStatistics f = new frmStatistics();
             f.SetPacketList(_curPacketList);
             f.ShowDialog();
+        }
+        private void statisticsToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            OnShowStatistics();
         }
 
         private void frmMain_Load(object sender, EventArgs e)
@@ -356,6 +331,15 @@ namespace PacketAnalyzer
             lstPackets.Columns.Add("Protocol", 150, HorizontalAlignment.Center);
             lstPackets.Columns.Add("Length", 60, HorizontalAlignment.Center);
 
+            // Create archive object
+            _db = OArchiveFactory.CreateArchive(OArchiveFactory.ArchiveType.ArchiveSQLite);
+            if (null == _db)
+            {
+                MessageBox.Show("Failed to load archive object", "Error");
+                this.Close();
+                return;
+            }
+
             // Load database
             if (false == _db.OpenDatabase(OArchive.DBName(), true))
             {
@@ -368,7 +352,7 @@ namespace PacketAnalyzer
 //            lstPackets.Items.Add("2");
         }
 
-        private void filterToolStripMenuItem_Click(object sender, EventArgs e)
+        private void OnShowFilter()
         {
             frmQuery fQuery = new frmQuery();
             if (DialogResult.OK != fQuery.ShowDialog())
@@ -381,7 +365,7 @@ namespace PacketAnalyzer
             lstPackets.Items.Clear();
             hexEdit.ByteProvider = null;
             // 3. Query packet list from the database
-            _db.Query(fQuery.GetStartTime(), fQuery.GetEndTime(), fQuery.GetProtocolList(), _curPacketList);
+            _db.QueryPackets(fQuery.GetStartTime(), fQuery.GetEndTime(), fQuery.GetProtocolList(), _curPacketList);
 
             if (_curPacketList.GetCount() <= 0)
             {
@@ -395,7 +379,7 @@ namespace PacketAnalyzer
                 OPacket packet = _curPacketList.GetAt(i);
                 int nNextNo = lstPackets.Items.Count + 1;
                 ListViewItem item = new ListViewItem(nNextNo.ToString());
-                item.SubItems.Add(packet.GetCollectedTime().ToString());
+                item.SubItems.Add(packet.GetTimeCollected().ToString());
                 item.SubItems.Add(packet.GetSourceIP());
                 item.SubItems.Add(packet.GetDestinationIP());
                 item.SubItems.Add(ProtocolInfo.instanceOf().ConvertToString(packet.GetProtocol()));
@@ -403,6 +387,11 @@ namespace PacketAnalyzer
 
                 lstPackets.Items.Add(item);
             }
+        }
+        // Query/Filter menu
+        private void filterToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OnShowFilter();
         }
 
         // Select Interface
@@ -414,6 +403,18 @@ namespace PacketAnalyzer
                 // Set current Selected NIC
                 OConfiguration.instanceOf().SetSelectedNIC(nCurNIC);
             }
+        }
+
+        // Event handler. It will called when search item is found
+        private void OnPacketFound(int nIndex)
+        {
+            if (nIndex < 0 || nIndex >= lstPackets.Items.Count)
+            {
+                return;
+            }
+
+            lstPackets.Items[nIndex].Selected = true;
+            _ShowCurrentSelectedPacketContents();
         }
 
         private void findPacketToolStripMenuItem_Click(object sender, EventArgs e)
@@ -430,21 +431,16 @@ namespace PacketAnalyzer
                 return;
             }
 
+
             // At this time, we have to search..
             // Build search hex value from the string
             byte[] searchBytes = _StringToByteArray(f.GetSearchString());
 
-            for (int i=0; i<_curPacketList.GetCount(); i++)
-            {
-                OPacket packet = _curPacketList.GetAt(i);
-                if (true == _ContainsSearchBytes(searchBytes, packet.GetPacketStoredPath()))
-                {
-                    lstPackets.Items[i].Selected = true;
-                    _ShowCurrentSelectedPacketContents();
-                    break;
-                }
-            }
-
+            OPacketSearcher search = new OPacketSearcher();
+            search.SetCurrentPacketList(_curPacketList);
+            search.RegisterEvent(OnPacketFound);
+            search.SearchPacket(searchBytes);
+            search.UnregisterEvent(OnPacketFound);
         }
 
         private void frmMain_FormClosing(object sender, FormClosingEventArgs e)

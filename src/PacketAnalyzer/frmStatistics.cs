@@ -78,7 +78,6 @@ namespace PacketAnalyzer
             }
         }
 
-
         public frmStatistics()
         {
             InitializeComponent();

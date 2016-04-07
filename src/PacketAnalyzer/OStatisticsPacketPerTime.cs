@@ -16,16 +16,16 @@ namespace PacketAnalyzer
             for (int i = 0; i < nCount; i++)
             {
                 OPacket packet = list.GetAt(i);
-                if (0 == _basetime || _basetime > packet.GetCollectedTime())
+                if (0 == _basetime || _basetime > packet.GetTimeCollected())
                 {
-                    _basetime = packet.GetCollectedTime();
+                    _basetime = packet.GetTimeCollected();
                 }
             }
         }
         protected override string _GetNameForPacket(OPacket packet)
         {
             string res;
-            res = (packet.GetCollectedTime() - _basetime).ToString();
+            res = (packet.GetTimeCollected() - _basetime).ToString();
             return res;
         }
     }
